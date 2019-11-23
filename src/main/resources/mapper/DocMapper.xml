@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfedu.ssm.dao.IDocDao">
+
+    <resultMap id="docMap" type="com.qfedu.ssm.service.bo.Document">
+        <id column="id" property="id"></id>
+        <result column="docname" property="docname"></result>
+        <result column="digest" property="digest"></result>
+        <result column="name" property="name"></result>
+        <result column="date" property="date"></result>
+    </resultMap>
+
+    <sql id="doc">${alias}.id,${alias}.docname,${alias}.digest,${alias}.name,${alias}.date</sql>
+
+
+    <insert id="insert">
+        insert into document.docu(docname,digest,name,date) values(#{docname},#{digest},#{name},#{date})
+    </insert>
+
+
+    <delete id="delete">
+        delete from docu where id=#{id}
+    </delete>
+
+    <select id="getId" resultMap="docMap">
+        select
+        <include refid="doc"><property name="alias" value="t1"/></include>
+        from docu t1 where id=#{id}
+    </select>
+
+    <update id="update">
+        update docu set docname=#{docname},digest=#{digest},name=#{name},date=#{date} where id=#{id}
+    </update>
+
+    <select id="list" resultMap="docMap">
+    select
+    <include refid="doc"><property name="alias" value="t1"/></include>
+    from docu t1;
+    </select>
+
+</mapper>
